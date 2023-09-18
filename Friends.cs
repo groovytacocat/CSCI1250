@@ -14,7 +14,7 @@
 */
 namespace Lab2Friend;
 
-class Program
+class Friends
 {
     static void Main(string[] args)
     {
