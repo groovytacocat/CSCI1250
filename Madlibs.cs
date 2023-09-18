@@ -10,9 +10,9 @@
 * Modified Date: 09/13/2023
 * -------------------------------------------------------------------
 */
-namespace Lab2Madlib;
+namespace Lab2;
 
-class Program
+class Madlibs
 {
     static void Main(string[] args)
     {
