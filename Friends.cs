@@ -12,7 +12,7 @@
 * 
 *
 */
-namespace Lab2Friend;
+namespace Lab2;
 
 class Friends
 {
