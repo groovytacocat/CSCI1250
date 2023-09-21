@@ -39,7 +39,7 @@ class Audiobooks
     {
         char choice;
         int numBooks;
-        double totalCharges = 0.0;
+        double totalCharges;
 
         Console.Write("Enter the letter of the Audiobooks package you purchased (A, B, or C): ");
         choice = char.ToUpper(char.Parse(Console.ReadLine()));
@@ -76,7 +76,11 @@ class Audiobooks
         }
         else
         {
+            //Print to user that they made an invalid package choice or input a negative number of books
+            //Set numBooks to 0 so when printing out final price assessment $0 and 0 books are shown 
             Console.WriteLine("You made an invalid choice for Audiobook package or entered a negative value for number of books read.\nPlease try again");
+            numBooks = 0;
+            totalCharges = 0.0;
         }
 
         Console.WriteLine($"\nTotal Charges for {numBooks} books for plan {choice} is ${totalCharges:F2}");         //Prints the total cost which will be $0.00 if the user supplies an invalid input earlier.
