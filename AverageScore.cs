@@ -1,4 +1,4 @@
-﻿/**
+/**
 *--------------------------------------------------------------------
 * File name: AverageScore.cs
 * Project name: Lab3Average
@@ -36,7 +36,7 @@ class AverageScore
 
         average = (score1 + score2 + score3) / 3.0; //Calculate the average of the 3 scores
 
-        Console.WriteLine($"Your average score is: {average:F2}");  //Print Average score formatted to 2 decimal places
+        Console.WriteLine($"Your average score is: {average:F2}");  //Print the average rounded to 2 decimal places.
 
         if(average > 95.0)
         {
