@@ -1,4 +1,4 @@
-﻿/**
+/**
 *--------------------------------------------------------------------
 * File name: Audiobooks.cs
 * Project name: Lab3Audiobooks
@@ -8,40 +8,9 @@
 * Course-Section: CSCI 1250
 * Creation Date: 09/20/2023
 * Modified Date: 09/20/2023
-* 
-* 
-*    if (choice == 'A')
-        {
-            if (numBooks > INCLUDED_A_BOOKS)
-            {
-                totalCharges = PACKAGE_A_PRICE + (EXTRA_A_BOOKS * (numBooks - INCLUDED_A_BOOKS));
-            }
-            else
-            {
-                totalCharges = PACKAGE_A_PRICE;
-            }
-        }
-        else if (choice == 'B')
-        {
-            if (numBooks > INCLUDED_B_BOOKS)
-            {
-                totalCharges = PACKAGE_B_PRICE + (EXTRA_B_BOOKS * (numBooks - INCLUDED_B_BOOKS));
-            }
-            else
-            {
-                totalCharges = PACKAGE_B_PRICE;
-            }
-        }
-        else if (choice == 'C')
-        {
-            totalCharges = PACKAGE_C_PRICE;
-        }
-        else
-        {
-            Console.WriteLine("You made an invalid choice");
-        }
 * -------------------------------------------------------------------
 */
+using System;
 namespace Lab3Audiobook;
 
 /// <summary>
@@ -72,15 +41,8 @@ class Audiobooks
         int numBooks;
         double totalCharges = 0.0;
 
-        do
-        {
-            Console.Write("Enter the letter of the Audiobook package you purchased (A, B, or C): ");    //Prompt user for audiobook package
-            choice = char.ToUpper(char.Parse(Console.ReadLine()));
-            if (!((choice == 'A') || (choice == 'B') || (choice == 'C')))
-            {
-                Console.WriteLine("Invalid Package Choice. Please choose another");
-            }
-        } while (!((choice == 'A') || (choice == 'B') || (choice == 'C')));
+        Console.Write("Enter the letter of the Audiobooks package you purchased (A, B, or C): ");
+        choice = char.ToUpper(char.Parse(Console.ReadLine()));
 
         Console.Write("Enter the number of audio books you read: ");
         numBooks = int.Parse(Console.ReadLine());
@@ -88,9 +50,35 @@ class Audiobooks
         ///<summary>
         ///Calculates total bill based on package chosen and number of Books read
         ///for case C since books included is unlimited the price for any number of books read will be the package price
-        ///If choice 
+        ///If User read more books than included they must pay additional fee based on the extra book rate * # of extra books
+        ///If the user inputs an invalid package choice or negative number of books read an error message will be printed
         ///</summary>
         
+        if((choice == 'C') && (numBooks >= 0))
+        {
+            totalCharges = PACKAGE_C_PRICE;
+        }
+        else if((choice == 'B') && (numBooks > INCLUDED_B_BOOKS))
+        {
+            totalCharges = PACKAGE_B_PRICE + (EXTRA_B_BOOKS * (numBooks - INCLUDED_B_BOOKS));
+        }
+        else if((choice == 'B') && (numBooks <= INCLUDED_B_BOOKS) && (numBooks >= 0))
+        {
+            totalCharges = PACKAGE_B_PRICE;
+        }
+        else if((choice == 'A') && (numBooks > INCLUDED_A_BOOKS))
+        {
+            totalCharges = PACKAGE_A_PRICE + (EXTRA_A_BOOKS * (numBooks - INCLUDED_A_BOOKS));
+        }
+        else if((choice == 'A') && (numBooks <= INCLUDED_A_BOOKS) && (numBooks >= 0))
+        {
+            totalCharges = PACKAGE_A_PRICE;
+        }
+        else
+        {
+            Console.WriteLine("You made an invalid choice for Audiobook package or entered a negative value for number of books read.\nPlease try again");
+        }
 
+        Console.WriteLine($"\nTotal Charges for {numBooks} books for plan {choice} is ${totalCharges:F2}");         //Prints the total cost which will be $0.00 if the user supplies an invalid input earlier.
     }
 }
