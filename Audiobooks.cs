@@ -1,17 +1,17 @@
-/**
+﻿/**
 *--------------------------------------------------------------------
 * File name: Audiobooks.cs
-* Project name: Lab3Audiobooks
-* Solution name: Lab3
+* Project name: Lab4Audiobooks
+* Solution name: Lab 4
 *--------------------------------------------------------------------
 * Author’s name and email: Adam Hooven, hoovenar@etsu.edu
 * Course-Section: CSCI 1250
-* Creation Date: 09/20/2023
-* Modified Date: 09/20/2023
+* Creation Date: 09/27/2023
+* Modified Date: 09/27/2023
 * -------------------------------------------------------------------
 */
 using System;
-namespace Lab3Audiobook;
+namespace Lab4Audiobook;
 
 /// <summary>
 /// Audiobook program with 3 different price choices available
@@ -37,52 +37,95 @@ class Audiobooks
 
     static void Main(string[] args)
     {
-        char choice;
+        char packChoice, repeatChoice; //New Char variables to indicate package choice and if user wishes to repeat the program
         int numBooks;
-        double totalCharges;
+        double totalCharges = 0.0;
+        bool validInput;               //Bool value for TryParse in event that user input is not a valid form of the data type
 
-        Console.Write("Enter the letter of the Audiobooks package you purchased (A, B, or C): ");
-        choice = char.ToUpper(char.Parse(Console.ReadLine()));
-
-        Console.Write("Enter the number of audio books you read: ");
-        numBooks = int.Parse(Console.ReadLine());
 
         ///<summary>
-        ///Calculates total bill based on package chosen and number of Books read
-        ///for case C since books included is unlimited the price for any number of books read will be the package price
-        ///If User read more books than included they must pay additional fee based on the extra book rate * # of extra books
-        ///If the user inputs an invalid package choice or negative number of books read an error message will be printed
-        ///</summary>
-        
-        if((choice == 'C') && (numBooks >= 0))
+        /// Prompts user for package choice and uses do-while loops and TryParse to validate that the given input is
+        /// of the correct data type (eg. no integers/doubles/strings for package choice or negative numbers for books read)
+        /// Uses switch statement to determine the method of price calculation
+        /// Asks user if they wish to run the program again and specifies that N must be entered to exit.
+        /// Converts user input to uppercase in the event of an 'n' instead of 'N'.
+        /// If user input 'n' or 'N' the program will exit otherwise program executes again
+        /// </summary>
+        do
         {
-            totalCharges = PACKAGE_C_PRICE;
-        }
-        else if((choice == 'B') && (numBooks > INCLUDED_B_BOOKS))
-        {
-            totalCharges = PACKAGE_B_PRICE + (EXTRA_B_BOOKS * (numBooks - INCLUDED_B_BOOKS));
-        }
-        else if((choice == 'B') && (numBooks <= INCLUDED_B_BOOKS) && (numBooks >= 0))
-        {
-            totalCharges = PACKAGE_B_PRICE;
-        }
-        else if((choice == 'A') && (numBooks > INCLUDED_A_BOOKS))
-        {
-            totalCharges = PACKAGE_A_PRICE + (EXTRA_A_BOOKS * (numBooks - INCLUDED_A_BOOKS));
-        }
-        else if((choice == 'A') && (numBooks <= INCLUDED_A_BOOKS) && (numBooks >= 0))
-        {
-            totalCharges = PACKAGE_A_PRICE;
-        }
-        else
-        {
-            //Print to user that they made an invalid package choice or input a negative number of books
-            //Set numBooks to 0 so when printing out final price assessment $0 and 0 books are shown 
-            Console.WriteLine("You made an invalid choice for Audiobook package or entered a negative value for number of books read.\nPlease try again");
-            numBooks = 0;
-            totalCharges = 0.0;
-        }
+            do
+            {
+                Console.Write("Enter the letter of the Audiobooks package you purchased (A, B, or C): ");
+                validInput = char.TryParse(Console.ReadLine(), out packChoice);
 
-        Console.WriteLine($"\nTotal Charges for {numBooks} books for plan {choice} is ${totalCharges:F2}");         //Prints the total cost which will be $0.00 if the user supplies an invalid input earlier.
+                packChoice = char.ToUpper(packChoice);
+
+                if (!validInput || !((packChoice == 'A') || (packChoice == 'B') || (packChoice == 'C')))
+                {
+                    Console.WriteLine("You made an invalid package choice. Please select A, B, or C: ");
+                }
+
+
+            } while (!validInput || !((packChoice == 'A') || (packChoice == 'B') || (packChoice == 'C')));
+
+            do
+            {
+                Console.Write("Enter the number of audio books you read: ");
+                validInput = int.TryParse(Console.ReadLine(), out numBooks);
+
+                if (numBooks < 0 || !validInput)
+                {
+                    Console.WriteLine("You entered an invalid number of books. Please enter a number greater than or equal to 0");
+                }
+
+
+            } while (!validInput || numBooks < 0);
+
+            ///<summary>
+            ///Calculates total monthly price
+            ///Update to use switch statement to make cleaner
+            ///No default case included for switch as input was validated prior in the program
+            ///</summary>
+
+            switch(packChoice)
+            {
+                case 'A':
+                    if(numBooks > INCLUDED_A_BOOKS)
+                    {
+                        totalCharges = PACKAGE_A_PRICE + (EXTRA_A_BOOKS * (numBooks - INCLUDED_A_BOOKS));
+                    }
+                    else
+                    {
+                        totalCharges = PACKAGE_A_PRICE;
+                    }
+                    break;
+                case 'B':
+                    if (numBooks > INCLUDED_B_BOOKS)
+                    {
+                        totalCharges = PACKAGE_B_PRICE + (EXTRA_B_BOOKS * (numBooks - INCLUDED_B_BOOKS));
+                    }
+                    else
+                    {
+                        totalCharges = PACKAGE_B_PRICE;
+                    }
+                    break;
+                case 'C':
+                    totalCharges = PACKAGE_C_PRICE;
+                    break;
+            }
+
+            Console.WriteLine($"\nTotal Charges for {numBooks} books for plan {packChoice} is ${totalCharges:F2}");         //Prints the total cost which will be $0.00 if the user supplies an invalid input earlier.
+
+
+            ///<summary>
+            ///Asks user if they would like to repeat the program. If n or N is entered the program exits
+            ///All other inputs will cause the program to repeat again
+            /// </summary>
+            Console.Write("Would you like to continue? If not please enter N: ");
+            char.TryParse(Console.ReadLine(), out repeatChoice);
+
+            repeatChoice = char.ToUpper(repeatChoice);
+
+        } while (repeatChoice != 'N');
     }
 }
