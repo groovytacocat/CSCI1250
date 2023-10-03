@@ -1,4 +1,7 @@
-﻿/**
+﻿
+
+using static System.Formats.Asn1.AsnWriter;
+/**
 *--------------------------------------------------------------------
 * File name: Project1.cs
 * Project name: Project1
@@ -16,7 +19,7 @@ namespace Project1;
 class Project1
 {
     const int MAX_QUESTIONS = 10;   //Max questions per Project Guidelines
-    public static bool validInput;
+    public static bool validInput;  //Boolean variable for input checking that is used repeatedly through program 
 
 
     /// <summary>
@@ -137,7 +140,7 @@ class Project1
         "What is the output to the below statement?\nConsole.Write(\"Yo quiero \");\nConsole.Write(\"Taco Bell\");" +
         "\nA. Nothing, it will display an error message" +
         "\nB. Yo quiero Taco Bell" + //CORRECT
-        "\nC. Yo quiero \nTaco Bell" +
+        "\nC. Yo quiero \n   Taco Bell" + //3 spaces added for formatting purposes
         "\nD. Yo quieroTacoBell",
         //q20
         "What is the purpose of nesting if statements in C#?" +
@@ -217,11 +220,11 @@ class Project1
         return userAnswers;
     }
 
-    public static void RunQuiz(List<int> userQuestions, List<char> userAnswers, int questionNum)
-    {
-
-    }
-
+    /// <summary>
+    /// Prompts user if they wish to continue to next question or stop where they are
+    /// If user opts to next question returns boolean value true
+    /// If user opts to finish returns boolean value of false
+    /// </summary>
     public static bool ContinueQuiz()
     {
         char nextQuestion;
@@ -253,11 +256,91 @@ class Project1
         }
     }
 
+    ///<summary>
+    ///Prompts user if they would like to repeat the Quiz program again.
+    ///Uses input validation to ensure the user not only enters a valid char, but also that the input is either a Y for Yes or N for no
+    ///If user wishes to start again returns Boolean value of true
+    ///If user wishes to stop returns Boolean value of false
+    ///</summary>
+    public static bool RepeatProgram()
+    {
+        char repeatChoice;
+
+        do
+        {
+            Console.Write("Would you like to do this again? Y/N: ");
+            validInput = char.TryParse(Console.ReadLine(), out repeatChoice);
+
+            repeatChoice = char.ToUpper(repeatChoice);
+
+            if (!(repeatChoice == 'Y' || repeatChoice == 'N'))
+            {
+                validInput = false;
+            }
+            if (!validInput)
+            {
+                Console.WriteLine("\nYou made an invalid choice please choose 'Y' or 'N'");
+            }
+
+            if (repeatChoice == 'Y')
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        } while (!validInput);
+    }
+
+
+    /// <summary>
+    /// Prompts user for their answer to the question
+    /// Validates user input to ensure they not only enter valid char but that the char is one of A, B, C, or D
+    /// Once a valid answer is input by user displays if they were correct or incorrect and in cases of incorrect answer notifies them of the correct choice and returns 0 to indicate no point earned for that question
+    /// If the user's answer choice matches the correct answer in the answer bank point will increment and a value of 1 is returned to indicate 1 point earned for the question
+    /// </summary>
+    public static int RunQuiz(List<int> userQuestions, List<char> quizAnswers, int questionNum)
+    {
+        char ansChoice;
+        int point = 0;
+
+        do
+        {
+            Console.WriteLine($"\nQuestion #{questionNum + 1} is:\n{questionBank[userQuestions[questionNum]]}\n");
+            Console.Write("Enter your answer choice (A, B, C, D): ");
+            validInput = char.TryParse(Console.ReadLine(), out ansChoice);
+
+            ansChoice = char.ToUpper(ansChoice);
+
+            if (!(ansChoice == 'A' || ansChoice == 'B' || ansChoice == 'C' || ansChoice == 'D'))
+            {
+                validInput = false;
+            }
+
+            if (!validInput)
+            {
+                Console.WriteLine("\nYou made an invalid choice. Please select A, B, C, or D");
+            }
+            else if (ansChoice.Equals(quizAnswers[questionNum]))
+            {
+                Console.WriteLine("\nCorrect!");
+                point++;
+            }
+            else
+            {
+                Console.WriteLine($"\nIncorrect! You entered {ansChoice}. The Correct answer was: {quizAnswers[questionNum]}");
+            }
+        } while (!validInput);
+
+        return point;
+    }
+
     static void Main(string[] args)
     {
         List<int> quiz = new List<int>();
         List<char> answers = new List<char>();
-        char ansChoice, repeatChoice;
         bool repeat; 
         int score, questionsAnswered;
         double grade;
@@ -266,60 +349,25 @@ class Project1
 
         do
         {
-            score = questionsAnswered = 0;
-            repeat = false;
+            score = questionsAnswered = 0; //Initialize score and questions answered to 0 for each go through
 
             LoadQuestions(quiz);        //Initializes quiz bank with questions 
             LoadAnswers(answers, quiz); //Populates answer bank with corresponding quiz answers 
 
+            ///<summary>
+            /// Displays questions 1-10 from the previously generated integer List quiz
+            /// Keeps running total of score and questions attempted as user progresses through quiz
+            /// Prompts user to choose if they wish to answer more questions or stop 
+            ///</summary>
             for (int i = 0; i < quiz.Count; i++)
             {
-                ///<summary>
-                ///Displays questions 1-10 from the previously generated integer List quiz
-                ///Prompts user for their answer to the question
-                ///Validates user input to ensure they not only enter valid char but that the char is one of A, B, C, or D
-                ///Once a valid answer is input by user displays if they were correct or incorrect and in cases of incorrect answer notifies them of the correct choice
-                ///If user's answer choice matches the corresponding question's answer in the char List answers score is incremented by 1
-                ///Regardless of correct or not questions answered is incremented by 1 to obtain accurate running score of correct answers out of questions attempted
-                ///</summary>
-                do
+                score += RunQuiz(quiz, answers, i);
+
+                questionsAnswered++;
+
+                if (i != (quiz.Count - 1)) //Will only display next question as long as program isn't last question to be shown
                 {
-                    Console.WriteLine($"\nQuestion #{i + 1} is:\n{questionBank[quiz[i]]}\n");
-                    Console.Write("Enter your answer choice (A, B, C, D): ");
-                    validInput = char.TryParse(Console.ReadLine(), out ansChoice);
-
-                    ansChoice = char.ToUpper(ansChoice);
-
-                    if (!(ansChoice == 'A' || ansChoice == 'B' || ansChoice == 'C' || ansChoice == 'D'))
-                    {
-                        validInput = false;
-                    }
-
-                    if (!validInput)
-                    {
-                        Console.WriteLine("\nYou made an invalid choice. Please select A, B, C, or D");
-                    }
-                    else if (ansChoice.Equals(answers[i]))
-                    {
-                        Console.WriteLine("\nCorrect!");
-                        score++;
-                        questionsAnswered++;
-                    }
-                    else
-                    {
-                        Console.WriteLine($"\nIncorrect! You entered {ansChoice}. The Correct answer was: {answers[i]}");
-                        questionsAnswered++;
-                    }
-                } while (!validInput);
-
-                ///<summary>
-                ///As long as the question user is about to answer is not last question to be asked will prompt user if they wish to continue answering more questions
-                ///Calls ContinueQuiz method which returns a boolean value based on if user wishes to continue or not
-                ///If user opts to stop then program breaks from for loop
-                ///</summary>
-                if (i != quiz.Count - 1)
-                {
-                    if(!ContinueQuiz())
+                    if(!ContinueQuiz())    //Negating ContinueQuiz will iterate again if user wishes to continue or break if user wishes to stop eg If Not Continue then stop.
                     {
                         break;
                     }
@@ -328,39 +376,10 @@ class Project1
 
             grade = (double)score / (double)questionsAnswered;      //Calculates a double percentile grade based on the score of correct questions out of total questions answered
 
-            Console.WriteLine($"\nYou scored a {score} / {questionsAnswered} or {grade * 100:F0} / 100\n"); //Prints user's score out of questions answered and displays the double percentile grade rounded to 0 decimal places
+            Console.WriteLine($"\nYou scored a {score} / {questionsAnswered} or {grade * 100:F0} / 100\n"); //Prints user's score out of questions answered and displays the double percentile grade rounded to 0 decimal places                     
 
-            ///<summary>
-            ///Prompts user if they would like to repeat the Quiz program again.
-            ///Uses input validation to ensure the user not only enters a valid char, but also that the input is either a Y for Yes or N for no
-            ///Based on user input will either repeat program or exit
-            ///</summary>
-            do
-            {
-                Console.Write("Would you like to do this again? Y/N: ");
-                validInput = char.TryParse(Console.ReadLine(), out repeatChoice);
+            repeat = RepeatProgram();
 
-                repeatChoice = char.ToUpper(repeatChoice);
-
-                if (!(repeatChoice == 'Y' || repeatChoice == 'N'))
-                {
-                    validInput = false;
-                }
-                if (!validInput)
-                {
-                    Console.WriteLine("\nYou made an invalid choice please choose 'Y' or 'N'");
-                }
-
-                if(repeatChoice == 'Y')
-                {
-                    repeat = true;
-                }
-                else
-                {
-                    repeat = false;
-                }
-
-            } while (!validInput);
         } while (repeat);
 
         Console.WriteLine("\nThank you for using my quiz tool. Goodbye!"); 
