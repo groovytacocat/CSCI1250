@@ -1,4 +1,4 @@
-﻿
+
 
 using static System.Formats.Asn1.AsnWriter;
 /**
@@ -21,9 +21,9 @@ class Project1_v2
     const int MAX_QUESTIONS = 10;   //Max questions per Project Guidelines
     public static bool validInput;  //Delcaring a boolean class variable to be used by member functions
 
-    /// <summary>
+    ///<summary>
     /// string array that contains 20 questions and their answer choices
-    /// </summary>
+    ///</summary>
     static string[] questionBank = new string[]
     {
         //q1
@@ -149,9 +149,9 @@ class Project1_v2
         "\nD. To make the code more efficient"
     };//END QuestionBank
 
-    /// <summary>
+    ///<summary>
     /// Char array that contains the answers to the questions in the QuestionBank array
-    /// </summary>
+    ///</summary>
     static char[] answerBank = new char[]
     {
         'D',
@@ -176,10 +176,10 @@ class Project1_v2
         'B'
     };
 
-    /// <summary>
+    ///<summary>
     /// Method that takes a List of Integers and populates it with random unique integers between 0-19 to create
     /// a quiz for the user that will display the questions in a different order each time
-    /// </summary>
+    ///</summary>
     public static List<int> LoadQuestions(List<int> userQuestions)
     {
         Random rNum = new Random();
@@ -187,11 +187,11 @@ class Project1_v2
         int questionNum;
 
         ///<summary>
-        ///Generates a random number between 0 and 9
-        ///If the random generated integer is not in the List it will be added
-        ///If the random integer was already in the List no value is added and the loop iterates again to generate another random integer
-        ///This will ensure that the List contains only unique random integers between 0 and 9
-        ///Ensures the user will answer different questions each quiz and not potentially multiples of the same question
+        /// Generates a random number between 0 and 9
+        /// If the random generated integer is not in the List it will be added
+        /// If the random integer was already in the List no value is added and the loop iterates again to generate another random integer
+        /// This will ensure that the List contains only unique random integers between 0 and 9
+        /// Ensures the user will answer different questions each quiz and not potentially multiples of the same question
         ///</summary>
         while (userQuestions.Count < MAX_QUESTIONS)
         {
@@ -219,11 +219,11 @@ class Project1_v2
         return userAnswers;
     }
 
-    /// <summary>
+    ///<summary>
     /// Prompts user if they wish to continue to next question or stop where they are
     /// If user opts to next question returns boolean value true
     /// If user opts to finish returns boolean value of false
-    /// </summary>
+    ///</summary>
     public static bool ContinueQuiz()
     {
         char nextQuestion;
@@ -246,10 +246,10 @@ class Project1_v2
     }
 
     ///<summary>
-    ///Prompts user if they would like to repeat the Quiz program again.
-    ///Uses input validation to ensure the user not only enters a valid char, but also that the input is either a Y for Yes or N for no
-    ///If user wishes to start again returns Boolean value of true
-    ///If user wishes to stop returns Boolean value of false
+    /// Prompts user if they would like to repeat the Quiz program again.
+    /// Uses input validation to ensure the user not only enters a valid char, but also that the input is either a Y for Yes or N for no
+    /// If user wishes to start again returns Boolean value of true
+    /// If user wishes to stop returns Boolean value of false
     ///</summary>
     public static bool RepeatProgram()
     {
@@ -272,13 +272,13 @@ class Project1_v2
         return repeatChoice == 'Y' ? true : false;
     }
 
-    /// <summary>
+    ///<summary>
     /// Displays question and answer choices to user and prompts user for answer
     /// Validates user input to ensure they not only enter valid char but that the char is one of A, B, C, or D (uses char.ToUpper method to avoid inconsistencies of case with user input)
     /// Compares user input with the char in the answer bank that matches the corresponding question from the question bank
     /// If User is correct point is incremented and function returns 1 to indicate question answered correctly.
     /// If User is incorrect the user is notified and correct answer is displayed, function returns 0 for score calculations
-    /// </summary>
+    ///</summary>
     public static int RunQuiz(List<int> userQuestions, List<char> quizAnswers, int questionNum)
     {
         char ansChoice;
@@ -338,7 +338,7 @@ class Project1_v2
 
                 if (j != (quiz.Count - 1)) //Will only display next question as long as program isn't last question to be shown
                 {
-                    if (!ContinueQuiz()) ////Negating ContinueQuiz will iterate again if user wishes to continue or break if user wishes to stop eg If Not Continue then stop.
+                    if (!ContinueQuiz()) //Negating ContinueQuiz will iterate again if user wishes to continue or break if user wishes to stop eg If Not Continue then stop.
                     {
                         break;
                     }
@@ -350,7 +350,6 @@ class Project1_v2
             Console.WriteLine($"\nYou scored a {points} / {attempted} or {uGrade * 100:F0} / 100\n"); //Prints user's score out of questions answered and displays the double percentile grade rounded to 0 decimal places
         } while (RepeatProgram());
     }
-
 
     static void Main(string[] args)
     {
