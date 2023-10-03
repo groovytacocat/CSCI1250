@@ -243,14 +243,7 @@ class Project1
             }
         } while (!validInput);
 
-        if(nextQuestion == 'N')
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        return nextQuestion == 'N' ? false : true;
     }
 
     ///<summary>
@@ -277,14 +270,7 @@ class Project1
             }
         } while (!validInput);
 
-        if (repeatChoice == 'Y')
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+       return repeatChoice == 'Y' ? true : false;
     }
 
 
