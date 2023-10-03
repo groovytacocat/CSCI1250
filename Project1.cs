@@ -279,7 +279,7 @@ class Project1
     /// If User is correct point is incremented and function returns 1 to indicate question answered correctly.
     /// If User is incorrect the user is notified and correct answer is displayed, function returns 0 for score calculations
     ///</summary>
-    public static int RunQuiz(List<int> userQuestions, List<char> quizAnswers, int questionNum)
+    public static int QuizUser(List<int> userQuestions, List<char> quizAnswers, int questionNum)
     {
         char ansChoice;
         int point = 0;
@@ -334,7 +334,7 @@ class Project1
             ///</summary>
             for (int i = 0; i < quiz.Count; i++)
             {
-                score += RunQuiz(quiz, answers, i);
+                score += QuizUser(quiz, answers, i);
 
                 questionsAnswered++;
 
