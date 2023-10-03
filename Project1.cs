@@ -1,4 +1,4 @@
-﻿
+
 
 using static System.Formats.Asn1.AsnWriter;
 /**
@@ -21,9 +21,9 @@ class Project1
     const int MAX_QUESTIONS = 10;   //Max questions per Project Guidelines
     public static bool validInput;  //Boolean variable for input checking that is used repeatedly through program 
 
-    /// <summary>
+    ///<summary>
     /// String array that contains 20 questions and their answer choices
-    /// </summary>
+    ///</summary>
     static string[] questionBank = new string[]
     {
         //q1
@@ -149,9 +149,9 @@ class Project1
         "\nD. To make the code more efficient"
     };//END QuestionBank
 
-    /// <summary>
+    ///<summary>
     /// Char array that contains the answers to the questions in the QuestionBank array
-    /// </summary>
+    ///</summary>
     static char[] answerBank = new char[]
     {
         'D',
@@ -176,10 +176,10 @@ class Project1
         'B'
     };
 
-    /// <summary>
+    ///<summary>
     /// Method that takes a List of Integers and populates it with random unique integers between 0-19 to create
     /// a quiz for the user that will display the questions in a different order each time
-    /// </summary>
+    ///</summary>
     public static List<int> LoadQuestions(List<int> userQuestions)
     {
         Random rNum = new Random();
@@ -206,9 +206,9 @@ class Project1
         return userQuestions;
     }
 
-    /// <summary>
+    ///<summary>
     /// Takes a char List and populates it with the corresponding correct answers of the integer List for user questions
-    /// </summary>
+    ///</summary>
     public static List<char> LoadAnswers(List<char> userAnswers, List<int> userQuestions)
     {
         for (int i = 0; i < userQuestions.Count; i++)
@@ -219,11 +219,11 @@ class Project1
         return userAnswers;
     }
 
-    /// <summary>
+    ///<summary>
     /// Prompts user if they wish to continue to next question or stop where they are
     /// If user opts to next question returns boolean value true
     /// If user opts to finish returns boolean value of false
-    /// </summary>
+    ///</summary>
     public static bool ContinueQuiz()
     {
         char nextQuestion;
@@ -272,13 +272,13 @@ class Project1
         return repeatChoice == 'Y' ? true : false;
     }
 
-    /// <summary>
+    ///<summary>
     /// Displays question and answer choices to user and prompts user for answer
     /// Validates user input to ensure they not only enter valid char but that the char is one of A, B, C, or D (uses char.ToUpper method to avoid inconsistencies of case with user input)
     /// Compares user input with the char in the answer bank that matches the corresponding question from the question bank
     /// If User is correct point is incremented and function returns 1 to indicate question answered correctly.
     /// If User is incorrect the user is notified and correct answer is displayed, function returns 0 for score calculations
-    /// </summary>
+    ///</summary>
     public static int RunQuiz(List<int> userQuestions, List<char> quizAnswers, int questionNum)
     {
         char ansChoice;
