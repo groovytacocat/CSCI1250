@@ -10,7 +10,7 @@ using static System.Formats.Asn1.AsnWriter;
 * Author’s name and email: Adam Hooven, hoovenar@etsu.edu
 * Course-Section: CSCI 1250
 * Creation Date: 10/2/2023
-* Modified Date: 10/2/2023
+* Modified Date: 10/3/2023
 * -------------------------------------------------------------------
 */
 
@@ -21,9 +21,8 @@ class Project1
     const int MAX_QUESTIONS = 10;   //Max questions per Project Guidelines
     public static bool validInput;  //Boolean variable for input checking that is used repeatedly through program 
 
-
     /// <summary>
-    /// string array that contains 20 questions and their answer choices
+    /// String array that contains 20 questions and their answer choices
     /// </summary>
     static string[] questionBank = new string[]
     {
@@ -188,11 +187,11 @@ class Project1
         int questionNum;
 
         ///<summary>
-        ///Generates a random number between 0 and 9
-        ///If the random generated integer is not in the List it will be added
-        ///If the random integer was already in the List no value is added and the loop iterates again to generate another random integer
-        ///This will ensure that the List contains only unique random integers between 0 and 9
-        ///Ensures the user will answer different questions each quiz and not potentially multiples of the same question
+        /// Generates a random number between 0 and 19
+        /// If the random generated integer is not in the List it will be added
+        /// If the random integer was already in the List no value is added and the loop iterates again to generate another random integer
+        /// This will ensure that the List contains only unique random integers between 0 and 19
+        /// Avoids the user having potentially redundant questions in each instance of the quiz being completed
         ///</summary>
         while (userQuestions.Count < MAX_QUESTIONS)
         {
@@ -212,7 +211,7 @@ class Project1
     /// </summary>
     public static List<char> LoadAnswers(List<char> userAnswers, List<int> userQuestions)
     {
-        for(int i = 0; i < userQuestions.Count; i++)
+        for (int i = 0; i < userQuestions.Count; i++)
         {
             userAnswers.Add(answerBank[userQuestions[i]]);
         }
@@ -247,10 +246,10 @@ class Project1
     }
 
     ///<summary>
-    ///Prompts user if they would like to repeat the Quiz program again.
-    ///Uses input validation to ensure the user not only enters a valid char, but also that the input is either a Y for Yes or N for no
-    ///If user wishes to start again returns Boolean value of true
-    ///If user wishes to stop returns Boolean value of false
+    /// Prompts user if they would like to repeat the Quiz program again.
+    /// Uses input validation to ensure the user not only enters a valid char, but also that the input is either a Y for Yes or N for no
+    /// If user wishes to start again returns Boolean value of true
+    /// If user wishes to stop returns Boolean value of false
     ///</summary>
     public static bool RepeatProgram()
     {
@@ -270,9 +269,8 @@ class Project1
             }
         } while (!validInput);
 
-       return repeatChoice == 'Y' ? true : false;
+        return repeatChoice == 'Y' ? true : false;
     }
-
 
     /// <summary>
     /// Displays question and answer choices to user and prompts user for answer
@@ -317,7 +315,6 @@ class Project1
     {
         List<int> quiz = new List<int>();
         List<char> answers = new List<char>();
-        bool repeat; 
         int score, questionsAnswered;
         double grade;
 
@@ -354,9 +351,7 @@ class Project1
 
             Console.WriteLine($"\nYou scored a {score} / {questionsAnswered} or {grade * 100:F0} / 100\n"); //Prints user's score out of questions answered and displays the double percentile grade rounded to 0 decimal places                     
 
-            repeat = RepeatProgram();
-
-        } while (repeat);
+        } while (RepeatProgram());
 
         Console.WriteLine("\nThank you for using my quiz tool. Goodbye!"); 
     }
