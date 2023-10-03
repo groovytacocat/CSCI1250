@@ -151,7 +151,7 @@ class Project1
     };//END QuestionBank
 
     /// <summary>
-    /// Char array that contains the answers to the questions in the above array
+    /// Char array that contains the answers to the questions in the QuestionBank array
     /// </summary>
     static char[] answerBank = new char[]
     {
@@ -178,7 +178,7 @@ class Project1
     };
 
     /// <summary>
-    /// Method that takes a List of Integers and populates it with random unique integers between 0-9 to create
+    /// Method that takes a List of Integers and populates it with random unique integers between 0-19 to create
     /// a quiz for the user that will display the questions in a different order each time
     /// </summary>
     public static List<int> LoadQuestions(List<int> userQuestions)
@@ -239,9 +239,6 @@ class Project1
             if (!(nextQuestion == 'Y' || nextQuestion == 'N'))
             {
                 validInput = false;
-            }
-            if (!validInput)
-            {
                 Console.WriteLine("\nYou made an invalid choice please choose 'Y' or 'N'");
             }
         } while (!validInput);
@@ -276,30 +273,27 @@ class Project1
             if (!(repeatChoice == 'Y' || repeatChoice == 'N'))
             {
                 validInput = false;
+                Console.WriteLine("\nYou made an invalid choice please choose 'Y' or 'N'\n");
             }
-            if (!validInput)
-            {
-                Console.WriteLine("\nYou made an invalid choice please choose 'Y' or 'N'");
-            }
-
-            if (repeatChoice == 'Y')
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-
         } while (!validInput);
+
+        if (repeatChoice == 'Y')
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
 
     /// <summary>
-    /// Prompts user for their answer to the question
-    /// Validates user input to ensure they not only enter valid char but that the char is one of A, B, C, or D
-    /// Once a valid answer is input by user displays if they were correct or incorrect and in cases of incorrect answer notifies them of the correct choice and returns 0 to indicate no point earned for that question
-    /// If the user's answer choice matches the correct answer in the answer bank point will increment and a value of 1 is returned to indicate 1 point earned for the question
+    /// Displays question and answer choices to user and prompts user for answer
+    /// Validates user input to ensure they not only enter valid char but that the char is one of A, B, C, or D (uses char.ToUpper method to avoid inconsistencies of case with user input)
+    /// Compares user input with the char in the answer bank that matches the corresponding question from the question bank
+    /// If User is correct point is incremented and function returns 1 to indicate question answered correctly.
+    /// If User is incorrect the user is notified and correct answer is displayed, function returns 0 for score calculations
     /// </summary>
     public static int RunQuiz(List<int> userQuestions, List<char> quizAnswers, int questionNum)
     {
@@ -317,10 +311,6 @@ class Project1
             if (!(ansChoice == 'A' || ansChoice == 'B' || ansChoice == 'C' || ansChoice == 'D'))
             {
                 validInput = false;
-            }
-
-            if (!validInput)
-            {
                 Console.WriteLine("\nYou made an invalid choice. Please select A, B, C, or D");
             }
             else if (ansChoice.Equals(quizAnswers[questionNum]))
