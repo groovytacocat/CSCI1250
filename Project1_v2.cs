@@ -279,7 +279,7 @@ class Project1_v2
     /// If User is correct point is incremented and function returns 1 to indicate question answered correctly.
     /// If User is incorrect the user is notified and correct answer is displayed, function returns 0 for score calculations
     ///</summary>
-    public static int RunQuiz(List<int> userQuestions, List<char> quizAnswers, int questionNum)
+    public static int QuizUser(List<int> userQuestions, List<char> quizAnswers, int questionNum)
     {
         char ansChoice;
         int point = 0;
@@ -316,7 +316,7 @@ class Project1_v2
     /// Keeps running total of score and questions attempted as user progresses through quiz
     /// Prompts user to choose if they wish to answer more questions or stop 
     ///</summary>
-    public static void Quizler()
+    public static void RunQuiz()
     {
         do
         {
@@ -332,7 +332,7 @@ class Project1_v2
 
             for (int j = 0; j < quiz.Count; j++)
             {
-                points += RunQuiz(quiz, answers, j);
+                points += QuizUser(quiz, answers, j);
 
                 attempted++;
 
@@ -355,7 +355,7 @@ class Project1_v2
     {
         Console.WriteLine("Welcome to CSCI 1250 Project 1!");
 
-        Quizler();
+        RunQuiz();
 
         Console.WriteLine("\nThank you for using my quiz tool. Goodbye!");
     }
