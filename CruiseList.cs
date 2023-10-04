@@ -1,4 +1,4 @@
-﻿
+
 
 using System;
 /**
@@ -22,15 +22,10 @@ class CruiseList
         List<string> cruiseLocation = new List<string>();
         List<double> cruisePrices = new List<double>();
 
-        double averagePrice;
-        int maxIndex;
-        int minIndex;
+        double averagePrice = 0.0;
+        int maxIndex = 0;
+        int minIndex = 0;
         char userChoice;
-
-        averagePrice = 0.0;
-
-        maxIndex = 0;
-        minIndex = 0;
 
         Console.WriteLine("Welcome to the Cruise Price Checker!! (Now with a Lists)\n");
 
