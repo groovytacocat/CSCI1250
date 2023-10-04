@@ -1,4 +1,4 @@
-﻿/**
+/**
 *--------------------------------------------------------------------
 * File name: CruiseArray.cs
 * Project name: CruiseArray
@@ -19,13 +19,9 @@ class CruiseArray
     static void Main(string[] args)
     {
         int numCruises;
-        int minIndex;
-        int maxIndex;
-        double averagePrice;
-
-        averagePrice = 0;
-        minIndex = 0;
-        maxIndex = 0;
+        int minIndex = 0;
+        int maxIndex = 0;
+        double averagePrice = 0.0;
 
         Console.WriteLine("Welcome to the Cruise Price Checker!!\n");
 
