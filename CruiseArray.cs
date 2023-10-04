@@ -22,14 +22,10 @@ class CruiseArray
         int minIndex;
         int maxIndex;
         double averagePrice;
-        double maxPrice;
-        double minPrice;
 
         averagePrice = 0;
         minIndex = 0;
         maxIndex = 0;
-        maxPrice = 0;
-        minPrice = 0.0;
 
         Console.WriteLine("Welcome to the Cruise Price Checker!!\n");
 
@@ -42,11 +38,10 @@ class CruiseArray
 
         ///<summary>
         /// Prompts user to give a location for a cruise, then prompts user for price of that cruise
-        /// Sets maximum price and minimum price to be the value of the first element in the price array
-        /// Compares current value in array to the "Max" value if current index of array is greater/equal price Max is set to that value and maxIndex is assigned the current index
-        /// If current price is not greater than Max compares the value to the min if current price is less/equal to min Min gets that value and minIndex gets that index
-        /// If not greater than max or less than min program just continues to iterate until array
-        /// Also uses averagePrice to store a running total of all costs
+        /// Calculates a running total of Cruise prices as they are entered
+        /// Stores index of the highest price and the lowest price
+        /// Compares the current price value to the value at maxIndex if current is greater maxIndex is set to current index
+        /// Same as above however if current price is less than value at minIndex minIndex is set to current index
         ///</summary>
         for(int i = 0; i < numCruises; i++)
         {
@@ -58,30 +53,23 @@ class CruiseArray
 
             averagePrice += cruisePrices[i];
 
-            if(i == 0)
+            if (cruisePrices[i] >= cruisePrices[maxIndex])
             {
-                maxPrice = minPrice = cruisePrices[i];
-            }
-            
-            if (cruisePrices[i] >= maxPrice)
-            {
-                maxPrice = cruisePrices[i];
                 maxIndex = i;
             }
-            else if(cruisePrices[i] <= minPrice)
+            else if (cruisePrices[i] <= cruisePrices[minIndex])
             {
-                minPrice = cruisePrices[i];
                 minIndex = i;
             }
         }
 
         averagePrice /= (double)numCruises;     //Takes total sum of all cruises and divides by number of cruises (cast to double due to being integer) to get average
 
-        Console.WriteLine($"\nMost Expensive Cruise:\n\t{cruiseLocation[maxIndex]}\n\t{maxPrice:C2}");
+        Console.WriteLine($"\nMost Expensive Cruise:\n\t{cruiseLocation[maxIndex]}\n\t{cruisePrices[maxIndex]:C}"); //Format to print the price as a currency to include $ a ',' if applicable and rounded to 2 decimal places
 
-        Console.WriteLine($"\nLeast Expensive Cruise:\n\t{cruiseLocation[minIndex]}\n\t{minPrice:C2}");
+        Console.WriteLine($"\nLeast Expensive Cruise:\n\t{cruiseLocation[minIndex]}\n\t{cruisePrices[minIndex]:C}");
 
-        Console.WriteLine($"\nAverage Cruise Price: {averagePrice:C2}");
+        Console.WriteLine($"\nAverage Cruise Price: {averagePrice:C}");
 
     }
 }
