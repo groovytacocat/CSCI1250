@@ -276,13 +276,12 @@ class Project1
     /// Displays question and answer choices to user and prompts user for answer
     /// Validates user input to ensure they not only enter valid char but that the char is one of A, B, C, or D (uses char.ToUpper method to avoid inconsistencies of case with user input)
     /// Compares user input with the char in the answer bank that matches the corresponding question from the question bank
-    /// If User is correct point is incremented and function returns 1 to indicate question answered correctly.
-    /// If User is incorrect the user is notified and correct answer is displayed, function returns 0 for score calculations
+    /// If User is correct they are notified and the method returns 1 to indicate question answered correctly.
+    /// If User is incorrect the user is notified and correct answer is displayed and method returns 0.
     ///</summary>
     public static int QuizUser(List<int> userQuestions, List<char> quizAnswers, int questionNum)
     {
         char ansChoice;
-        int point = 0;
 
         do
         {
@@ -297,32 +296,35 @@ class Project1
                 validInput = false;
                 Console.WriteLine("\nYou made an invalid choice. Please select A, B, C, or D");
             }
-            else if (ansChoice.Equals(quizAnswers[questionNum]))
-            {
-                Console.WriteLine("\nCorrect!");
-                point++;
-            }
-            else
-            {
-                Console.WriteLine($"\nIncorrect! You entered {ansChoice}. The Correct answer was: {quizAnswers[questionNum]}");
-            }
+            
         } while (!validInput);
 
-        return point;
+        if (ansChoice.Equals(quizAnswers[questionNum]))
+        {
+            Console.WriteLine("\nCorrect!");
+            return 1;
+        }
+        else
+        {
+            Console.WriteLine($"\nIncorrect! You entered {ansChoice}. The Correct answer was: {quizAnswers[questionNum]}");
+            return 0;
+        }
     }
 
     static void Main(string[] args)
     {
         List<int> quiz = new List<int>();
         List<char> answers = new List<char>();
-        int score, questionsAnswered;
+        int score;
+        int questionsAnswered;
         double grade;
 
         Console.WriteLine("Welcome to CSCI 1250 Project 1!");
 
         do
         {
-            score = questionsAnswered = 0; //Initialize score and questions answered to 0 for each go through
+            score = 0;
+            questionsAnswered = 0; //Initialize score and questions answered to 0 for each go through
 
             LoadQuestions(quiz);        //Initializes quiz bank with questions 
             LoadAnswers(answers, quiz); //Populates answer bank with corresponding quiz answers 
