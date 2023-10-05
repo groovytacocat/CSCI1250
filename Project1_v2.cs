@@ -282,7 +282,6 @@ class Project1_v2
     public static int QuizUser(List<int> userQuestions, List<char> quizAnswers, int questionNum)
     {
         char ansChoice;
-        int point = 0;
 
         do
         {
@@ -297,18 +296,18 @@ class Project1_v2
                 validInput = false;
                 Console.WriteLine("\nYou made an invalid choice. Please select A, B, C, or D");
             }
-            else if (ansChoice.Equals(quizAnswers[questionNum]))
-            {
-                Console.WriteLine("\nCorrect!");
-                point++;
-            }
-            else
-            {
-                Console.WriteLine($"\nIncorrect! You entered {ansChoice}. The Correct answer was: {quizAnswers[questionNum]}");
-            }
         } while (!validInput);
 
-        return point;
+        if (ansChoice.Equals(quizAnswers[questionNum]))
+        {
+            Console.WriteLine("\nCorrect!");
+            return 1;
+        }
+        else
+        {
+            Console.WriteLine($"\nIncorrect! You entered {ansChoice}. The Correct answer was: {quizAnswers[questionNum]}");
+            return 0;
+        }
     }
 
     ///<summary>
@@ -322,10 +321,12 @@ class Project1_v2
         {
             List<int> quiz = new List<int>();
             List<char> answers = new List<char>();
-            int points, attempted;
+            int points;
+            int attempted;
             double uGrade;
 
-            points = attempted = 0;         //Initialize score and questions answered to 0 for each go through
+            points = 0;
+            attempted = 0;         //Initialize score and questions answered to 0 for each go through
 
             LoadQuestions(quiz);            //Initializes quiz bank with questions
             LoadAnswers(answers, quiz);     //Populates answer bank with corresponding quiz answers 
