@@ -8,95 +8,78 @@ namespace MyDLL
 {
     public class CSCI1250
     {
-        public interface IValid<T>
+        public static int ValidateInt(string prompt, string errorMessage, int MIN, int MAX)
         {
-            static abstract T Validate(string prompt, string errorMessage, List<T> accepted);
+            int input;
+
+            Console.Write(prompt);
+
+            try
+            {
+                input = int.Parse(Console.ReadLine());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                input = ValidateInt(prompt, errorMessage, MIN, MAX);
+            }
+            if(input < MIN || input > MAX)
+            {
+                Console.WriteLine(errorMessage);
+                input = ValidateInt(prompt, errorMessage, MIN, MAX);
+            }
+
+            return input;
         }
 
-        public class CharValid : IValid<char>
+        public static double ValidateDouble(string prompt, string errorMessage, double MIN, double MAX)
         {
-            public static char Validate(string prompt, string errorMessage, List<char> accepted)
+            double input;
+
+            Console.Write(prompt);
+
+            try
             {
-                char input;
-
-                Console.Write(prompt);
-
-                try
-                {
-                    input = char.Parse(Console.ReadLine());
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    input = Validate(prompt, errorMessage, accepted);
-                }
-
-                if (!(accepted.Contains(input)))
-                {
-                    Console.WriteLine(errorMessage);
-                    input = Validate(prompt, errorMessage, accepted);
-                } 
-
-                return input;
+                input = double.Parse(Console.ReadLine());
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                input = ValidateDouble(prompt, errorMessage, MIN, MAX);
+            }
+            if(input < MIN || input > MAX)
+            {
+                Console.WriteLine(errorMessage);
+                input = ValidateDouble(prompt, errorMessage, MIN, MAX);
+            }
+
+            return input;
         }
 
-        public class IntValid : IValid<int>
+        public static char ValidateChar(string prompt, string errorMessage, List<char> accepted)
         {
-            public static int Validate(string prompt, string errorMessage, List<int> accepted)
+            char input;
+
+            Console.Write(prompt);
+
+            try
             {
-                int input;
-
-                Console.Write(prompt);
-
-                try
-                {
-                    input = int.Parse(Console.ReadLine());
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    input = Validate(prompt, errorMessage, accepted);
-                }
-
-                if(input < accepted[0] || input > accepted[^1])
-                {
-                    Console.WriteLine(errorMessage);
-
-                    input = Validate(prompt, errorMessage, accepted);
-                }
-
-                return input;
+                input = char.Parse(Console.ReadLine());
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                input = ValidateChar(prompt, errorMessage, accepted);
+            }
+            if(!(accepted.Contains(input))
+            {
+                Console.WriteLine(errorMessage);
+                input = ValidateChar(prompt, errorMessage, accepted);
+            }
+
+            return input;
         }
-
-        public class DoubleValid : IValid<double>
-        {
-            public static double Validate(string prompt, string errorMessage, List<double> accepted)
-            {
-                double input;
-
-                Console.Write(prompt);
-
-                try
-                {
-                    input = double.Parse(Console.ReadLine());
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    input = Validate(prompt, errorMessage, accepted);
-                }
-
-                if (input < accepted[0] || input > accepted[^1])
-                {
-                    Console.WriteLine(errorMessage);
-
-                    input = Validate(prompt, errorMessage, accepted);
-                }
-
-                return input;
-            }
+        
         }
     }
 }
