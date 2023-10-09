@@ -12,8 +12,8 @@
 */
 
 using MyDLL;
-namespace CruiseArray;
 
+namespace CruiseArray;
 
 class CruiseArray
 {
