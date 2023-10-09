@@ -1,7 +1,7 @@
 namespace MyDLL
 {
 
-    public class CSCI1250
+    public static class CSCI1250
     {
         public static T Parse<T>(string s, IFormatProvider provider) where T : IParsable<T>
         {
@@ -12,7 +12,7 @@ namespace MyDLL
         {
             T input;
 
-            Console.WriteLine(prompt);
+            Console.Write(prompt);
 
             try
             {
@@ -35,7 +35,7 @@ namespace MyDLL
 
         public static T Validate<T>(string prompt, string errorMessage) where T : IParsable<T>
         {
-            Console.WriteLine(prompt);
+            Console.Write(prompt);
 
             try
             {
@@ -46,6 +46,24 @@ namespace MyDLL
                 Console.WriteLine(errorMessage);
                 return Validate<T>(prompt, errorMessage);
             }
+        }
+
+        public static bool Repeat(string prompt, string errorMessage)
+        {
+            char repeat;
+
+            do
+            {
+                repeat = char.ToUpper(Validate<char>(prompt, errorMessage));
+
+                if(!(repeat == 'Y' || repeat == 'N'))
+                {
+                    Console.WriteLine(errorMessage);
+                }
+            } while (!(repeat == 'Y' || repeat == 'N'));
+
+            return repeat == 'Y' ? true : false;
+
         }
     }
 }
