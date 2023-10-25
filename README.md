@@ -1,4 +1,4 @@
 # CSCI1250
 Stuff from CSCI1250 Labs
 
-Code either partial or completed from CSCI 1250 Labs for the ease of swapping between laptop and home PC
+Code contained within is either completed labs, partially completed labs (to swap between machines), or classes/methods I have written to make things easier.
