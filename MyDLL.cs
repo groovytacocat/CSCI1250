@@ -1,18 +1,25 @@
 namespace MyDLL
 {
 
-    public static class CSCI1250
+    public class CSCI1250
     {
+        //Generic Parse method implemented by IParsable<T>
         public static T Parse<T>(string s, IFormatProvider provider) where T : IParsable<T>
         {
             return T.Parse(s, provider);
         }
 
+        ///<summary>
+        /// Generic Validate Method that takes a prompt, an error message, and a generic List of values to compare the input read from console
+        /// If the user input throws an exception when parsing errormessage is displayed and the validate method gets a recursive call
+        /// Concept in mind for this method is for when desired input must match pre-determined values
+        ///     E.g. Y/N questions, Multiple Choice questions, Number values where they must match a set of values known prior to running program
+        ///</summary>
         public static T Validate<T>(string prompt, string errorMessage, List<T> accepted) where T : IParsable<T>
         {
             T input;
 
-            Console.Write(prompt);
+            Console.WriteLine(prompt);
 
             try
             {
@@ -21,21 +28,27 @@ namespace MyDLL
             catch
             {
                 Console.WriteLine(errorMessage);
-                input = Validate<T>(prompt, errorMessage, accepted);
+                input = Validate(prompt, errorMessage, accepted);
             }
 
             if (!(accepted.Contains(input)))
             {
                 Console.WriteLine(errorMessage);
-                input = Validate<T>(prompt, errorMessage, accepted);
+                input = Validate(prompt, errorMessage, accepted);
             }
 
             return input;
         }
 
+        ///<summary>
+        /// Generic Validate Method that takes a prompt, an error message
+        /// If the user input throws an exception when parsing errormessage is displayed and the validate method gets a recursive call
+        /// Similar to the above however this works for when you have numeric inputs that need to be within a range
+        ///     E.g. A < input < B / input > 0 / or where a list of accepted values may be so large that it would not be sensible to declare/initialize
+        ///</summary>
         public static T Validate<T>(string prompt, string errorMessage) where T : IParsable<T>
         {
-            Console.Write(prompt);
+            Console.WriteLine(prompt);
 
             try
             {
@@ -48,6 +61,12 @@ namespace MyDLL
             }
         }
 
+
+        ///<summary>
+        /// Method that returns a boolean to be used when prompting a user if they would like to repeat a program/method/action
+        /// Only accepts y, Y, n, or N as values
+        /// Returns true for user input of y/Y 
+        ///</summary>
         public static bool Repeat(string prompt, string errorMessage)
         {
             char repeat;
@@ -56,7 +75,7 @@ namespace MyDLL
             {
                 repeat = char.ToUpper(Validate<char>(prompt, errorMessage));
 
-                if(!(repeat == 'Y' || repeat == 'N'))
+                if (!(repeat == 'Y' || repeat == 'N'))
                 {
                     Console.WriteLine(errorMessage);
                 }
