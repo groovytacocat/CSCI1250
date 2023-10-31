@@ -84,5 +84,20 @@ namespace MyDLL
             return repeat == 'Y' ? true : false;
 
         }
+
+        /// <summary>
+        /// Generic that swaps the valuables of 2 variables
+        /// </summary>
+        /// <typeparam name="T">Type of values being swapped</typeparam>
+        /// <param name="x">Value 1 to be swapped</param>
+        /// <param name="y">Value 2 to be swapped</param>
+        public static void Swap<T> (ref T x, ref T y)
+        {
+            T swap = y;
+
+            y = x;
+
+            x = swap;
+        }
     }
 }
