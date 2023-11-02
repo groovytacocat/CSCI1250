@@ -4,7 +4,7 @@
 * Project name: Lab3Average
 * Solution name: Lab3
 *--------------------------------------------------------------------
-* Author’s name and email: Adam Hooven, hoovenar@etsu.edu
+* Author’s name and email: Adam Hooven
 * Course-Section: CSCI 1250
 * Creation Date: 09/20/2023
 * Modified Date: 09/20/2023
