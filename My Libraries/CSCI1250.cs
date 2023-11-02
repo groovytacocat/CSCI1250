@@ -19,7 +19,7 @@ namespace MyDLL
         {
             T input;
 
-            Console.WriteLine(prompt);
+            Console.Write(prompt);
 
             try
             {
@@ -27,13 +27,13 @@ namespace MyDLL
             }
             catch
             {
-                Console.WriteLine(errorMessage);
+                Console.Write(errorMessage);
                 input = Validate(prompt, errorMessage, accepted);
             }
 
             if (!(accepted.Contains(input)))
             {
-                Console.WriteLine(errorMessage);
+                Console.Write(errorMessage);
                 input = Validate(prompt, errorMessage, accepted);
             }
 
@@ -48,7 +48,7 @@ namespace MyDLL
         ///</summary>
         public static T Validate<T>(string prompt, string errorMessage) where T : IParsable<T>
         {
-            Console.WriteLine(prompt);
+            Console.Write(prompt);
 
             try
             {
@@ -56,11 +56,49 @@ namespace MyDLL
             }
             catch
             {
-                Console.WriteLine(errorMessage);
+                Console.Write(errorMessage);
                 return Validate<T>(prompt, errorMessage);
             }
         }
 
+        /// <summary>
+        /// Generic Validate method as above but intended for use with numeric data types
+        /// Takes a min and max argument and compares user input to these values.
+        /// Displays error message if input is not within the upper/lower bounds
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="prompt">String to prompt user for input</param>
+        /// <param name="errorMessage">String displayed when parse failed or input not within bounds</param>
+        /// <param name="min">Minimum acceptable value</param>
+        /// <param name="max">Maximum acceptable value</param>
+        /// <returns>A number of type T that is within the provided boundary</returns>
+        public static T Validate<T>(string prompt, string errorMessage, T min, T max) where T : IParsable<T>, IComparable<T>
+        {
+            T input;
+
+            do
+            {
+                Console.Write(prompt);
+
+                try
+                {
+                    input = Parse<T>(Console.ReadLine(), null);
+                }
+                catch
+                {
+                    Console.Write(errorMessage);
+                    input = Validate<T>(prompt, errorMessage, min, max);
+                }
+
+                if (input.CompareTo(min) < 0 || input.CompareTo(max) > 0)
+                {
+                    Console.Write(errorMessage);
+                }
+
+            } while (input.CompareTo(min) < 0 || input.CompareTo(max) > 0);
+
+            return input;
+        }
 
         ///<summary>
         /// Method that returns a boolean to be used when prompting a user if they would like to repeat a program/method/action
@@ -77,12 +115,11 @@ namespace MyDLL
 
                 if (!(repeat == 'Y' || repeat == 'N'))
                 {
-                    Console.WriteLine(errorMessage);
+                    Console.Write(errorMessage);
                 }
             } while (!(repeat == 'Y' || repeat == 'N'));
 
             return repeat == 'Y' ? true : false;
-
         }
 
         /// <summary>
