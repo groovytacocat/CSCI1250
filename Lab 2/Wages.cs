@@ -4,7 +4,7 @@
 * Project name: Lab2Wages
 * Solution name: Lab2 
 *--------------------------------------------------------------------
-* Author’s name and email: Adam Hooven, hoovenar@etsu.edu
+* Author’s name and email: Adam Hooven
 * Course-Section: CSCI 1250
 * Creation Date: 09/13/2023
 * Modified Date: 09/13/2023
