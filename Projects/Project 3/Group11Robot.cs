@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 namespace RobotCaveFightTestArena
 {
     public class Group11Robot : IRobot
     {
         private string name;
-        private string[] studentNames = { "Adam Hooven", "Larry Deskins", "Amalachukwu Emodi", "Madison Hotchkiss" };
+        private string[] studentNames;
         private double attack;
         private double defense;
         private double speed;
@@ -12,6 +12,7 @@ namespace RobotCaveFightTestArena
         private double health;
         private string primaryColor;
         private string secondaryColor;
+        private ActionResult myAction;
 
 
         public double GetHealth()
@@ -61,12 +62,28 @@ namespace RobotCaveFightTestArena
 
         public void Reset()
         {
-            throw new NotImplementedException();
+            this.defense = 10.0;
+            this.speed = 10.0;
+            this.constitution = 10.0;
+            this.health = this.constitution * 10.0;
         }
 
         public void TakeDamage(double damage)
         {
             throw new NotImplementedException();
+        }
+
+        public Group11Robot()
+        {
+            this.studentNames = new[] { "Adam Hooven", "Amalachukwu Emodi", "Larry Deskins" };
+            this.name = "Optimus Prime";
+            this.attack = 10.0;
+            this.defense = 10.0;
+            this.speed = 10.0;
+            this.constitution = 10.0;
+            this.health = this.constitution * 10.0;
+            this.primaryColor = "#E81E27";
+            this.secondaryColor = "#44BBFF";
         }
     }
 }
