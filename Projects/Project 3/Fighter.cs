@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 namespace RobotCaveFightTestArena
 {
     public class Fighter : IRobot
@@ -114,7 +114,7 @@ namespace RobotCaveFightTestArena
             this.health -= damage;
         }
         
-        public ActionResult NaniteInjection(IRobot opponent)
+        public ActionResult NaniteInjection()
         {
             double hpPercent = this.health / this.GetMaxHealth();
 
@@ -160,7 +160,7 @@ namespace RobotCaveFightTestArena
             return new ActionResult("Brain Dive", "Power Up");
         }
 
-        public ActionResult AntiVirusScan(IRobot opponent)
+        public ActionResult AntiVirusScan()
         {
             if( (this.health / this.GetMaxHealth()) >= .9)
             {
