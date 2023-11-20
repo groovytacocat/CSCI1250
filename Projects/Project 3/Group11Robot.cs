@@ -1,4 +1,6 @@
 using System;
+using static System.Collections.Specialized.BitVector32;
+
 namespace RobotCaveFightTestArena
 {
     public class Group11Robot : IRobot
@@ -12,8 +14,6 @@ namespace RobotCaveFightTestArena
         private double health;
         private string primaryColor;
         private string secondaryColor;
-        private ActionResult myAction;
-
 
         public double GetHealth()
         {
@@ -39,7 +39,15 @@ namespace RobotCaveFightTestArena
         {
             return this.secondaryColor;
         }
+        public double GetAttack()
+        {
+            return this.attack;
+        }
 
+        public double GetDefense()
+        {
+            return this.defense;
+        }
         public double GetSpeed()
         {
             return this.speed;
@@ -57,20 +65,74 @@ namespace RobotCaveFightTestArena
 
         public ActionResult PerformAction(IRobot opponent)
         {
-            throw new NotImplementedException();
+            ActionResult action = new ActionResult("", "");
+
+            Random random = new Random();
+
+            int actionChoice = random.Next(1, 4);
+
+            
+            if (this.attack > 500 && actionChoice == 2)
+            {
+                actionChoice = 1;
+            }
+
+            switch (actionChoice)
+            {
+                case 1:
+                    action = Attack(opponent);
+                    break;
+                case 2:
+                    action = SuperBuff();
+                    break;
+                case 3:
+                    action = SuperArmor();
+                    break;
+            }
+
+            return action;
         }
 
         public void Reset()
         {
-            this.defense = 10.0;
-            this.speed = 10.0;
+            this.attack = 12.0;
+            this.defense = 13.0;
+            this.speed = 5.0;
             this.constitution = 10.0;
-            this.health = this.constitution * 10.0;
+            this.health = constitution * 10.0;
         }
 
         public void TakeDamage(double damage)
         {
-            throw new NotImplementedException();
+            damage -= (this.defense / 100 * damage);
+
+            this.health -= damage;
+        }
+
+        public ActionResult SuperBuff()
+        {
+            double buffPoints = 1000;
+
+            this.speed -= buffPoints;
+            this.defense += 90;
+            this.attack += 910;
+
+            return new ActionResult("Super Buff", "Power Up");
+        }
+
+        public ActionResult SuperArmor()
+        {
+            this.speed -= 100;
+            this.defense += 100;
+
+            return new ActionResult("Super Armor", "Power Up");
+        }
+
+        public ActionResult Attack(IRobot opponent)
+        {
+            opponent.TakeDamage(this.attack);
+
+            return new ActionResult("Attack", "Punch");
         }
 
         public Group11Robot()
@@ -87,4 +149,3 @@ namespace RobotCaveFightTestArena
         }
     }
 }
-
